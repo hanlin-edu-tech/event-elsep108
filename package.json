@@ -1,0 +1,25 @@
+{
+    "name": "event-elsep108",
+    "description": "eHanlin 國小自修評量",
+    "author": "Aso <aso@ehanlin.com.tw>",
+    "version": "0.0.1-SNAPSHOT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/eHanlin/event-elsep108.git"
+    },
+    "dependencies": {
+        "@google-cloud/storage": "^1.7.0",
+        "del": "^3.0.0",
+        "fs": "0.0.1-security",
+        "gulp": "^3.9.1",
+        "gulp-gcloud-publish": "^2.0.0",
+        "path": "^0.12.7",
+        "q": "^1.5.1"
+    },
+    "devDependencies": {
+        "gulp-cache": "^1.0.2",
+        "gulp-imagemin": "^4.1.0",
+        "gulp-template-util": "0.0.2",
+        "imagemin-pngquant": "^5.1.0"
+    }
+}
