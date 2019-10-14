@@ -7,4 +7,5 @@ dist
 node_modules
 package-lock.json
 tutor.json
+tutor-test.json
 

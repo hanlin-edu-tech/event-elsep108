@@ -4,11 +4,13 @@ const gulp = require("gulp");
 const util = require("gulp-template-util");
 const gcPub = require("gulp-gcloud-publish");
 
-let bucketNameForTest = "tutor-events-test";
-let bucketNameForProd = "tutor-events";
-let projectId = "tutor-204108";
-let keyFilename = "tutor.json";
-let projectName = "event/elsep108/";
+const bucketNameForTest = "tutor-test-events";
+const bucketNameForProd = "tutor-events";
+const projectId = "tutor-204108";
+const projectIdTest = "tutor-test-238709";
+const keyFileName = "tutor.json";
+const keyFileNameTest = "tutor-test.json";
+const projectName = "event/elsep108/";
 
 let copyStaticTask = dest => {
     return () => {
@@ -24,27 +26,44 @@ let cleanTask = () => {
     return del(["dist", ""]);
 };
 
-let uploadGCS = bucketName => {
+let uploadGCSProd = bucketName => {
     return gulp
-        .src(["./dist/*.html", "./dist/css/**", "./dist/img/**/*.@(jpg|png|gif|svg)"], {
+        .src(["dist/*.html", "dist/img/**", "dist/css/**"], {
             base: `${__dirname}/dist/`
         })
         .pipe(
             gcPub({
                 bucket: bucketName,
-                keyFilename: keyFilename,
+                keyFilename: keyFileName,
                 base: projectName,
                 projectId: projectId,
                 public: true,
                 metadata: {
-                    cacheControl: "no-store"
+                    cacheControl: "no-store, no-transform"
                 }
             })
         );
 };
 
-gulp.task("uploadGcpTest", uploadGCS.bind(uploadGCS, bucketNameForTest));
-gulp.task("uploadGcpProd", uploadGCS.bind(uploadGCS, bucketNameForProd));
+let uploadGCSTest = bucketName => {
+    return gulp
+        .src(["dist/*.html", "dist/img/**", "dist/css/**"], {
+            base: `${__dirname}/dist/`
+        })
+        .pipe(
+            gcPub({
+                bucket: bucketName,
+                keyFilename: keyFileNameTest,
+                base: projectName,
+                projectId: projectIdTest,
+                public: true,
+                metadata: {
+                    cacheControl: "no-store, no-transform"
+                }
+            })
+        );
+};
+
 gulp.task("build", ["style", "lib"]);
 gulp.task("package", () => {
     let deferred = Q.defer();
@@ -55,3 +74,6 @@ gulp.task("package", () => {
     });
     return deferred.promise;
 });
+
+gulp.task("uploadGcsTest", uploadGCSTest.bind(uploadGCSTest, bucketNameForTest));
+gulp.task("uploadGcsProd", uploadGCSProd.bind(uploadGCSProd, bucketNameForProd));
