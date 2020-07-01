@@ -10,7 +10,7 @@ const projectId = "tutor-204108";
 const projectIdTest = "tutor-test-238709";
 const keyFileName = "tutor.json";
 const keyFileNameTest = "tutor-test.json";
-const projectName = "event/elsep108/";
+const projectName = "event/elsep109/";
 
 let copyStaticTask = dest => {
     return () => {
@@ -64,7 +64,6 @@ let uploadGCSTest = bucketName => {
         );
 };
 
-gulp.task("build", ["style", "lib"]);
 gulp.task("package", () => {
     let deferred = Q.defer();
     Q.fcall(() => {
